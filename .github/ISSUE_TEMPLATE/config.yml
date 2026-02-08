@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: OctoPhyx Documentation
+    url: https://github.com/ashwincreator/physics-learning-platform
+    about: Learn more about OctoPhyx features and usage
+  - name: Report a Bug
+    url: https://github.com/ashwincreator/physics-learning-platform/issues/new?template=bug_report.md
+    about: Help us improve by reporting bugs
+  - name: Request a Feature
+    url: https://github.com/ashwincreator/physics-learning-platform/issues/new?template=feature_request.md
+    about: Suggest new features for OctoPhyx
