@@ -25,4 +25,38 @@ export const users = mysqlTable("users", {
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
-// TODO: Add your tables here
+/**
+ * Physics topics table - stores predefined physics concepts for autocomplete
+ */
+export const physicsTopics = mysqlTable("physics_topics", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  category: mysqlEnum("category", ["mechanics", "waves", "electromagnetism", "quantum", "thermodynamics", "optics", "relativity"]).notNull(),
+  description: text("description"),
+  keywords: text("keywords"), // JSON array of related terms
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type PhysicsTopic = typeof physicsTopics.$inferSelect;
+export type InsertPhysicsTopic = typeof physicsTopics.$inferInsert;
+
+/**
+ * Generated content table - stores AI-generated explanations and visualizations
+ */
+export const generatedContent = mysqlTable("generated_content", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").references(() => users.id),
+  topic: varchar("topic", { length: 255 }).notNull(),
+  category: varchar("category", { length: 100 }),
+  explanation: text("explanation"), // AI-generated explanation
+  formulas: text("formulas"), // JSON array of formulas
+  animationCode: text("animationCode"), // Manim-style code
+  diagramUrl: text("diagramUrl"), // Generated diagram image URL
+  videoUrl: text("videoUrl"), // Generated animation video URL
+  status: mysqlEnum("status", ["pending", "generating", "completed", "failed"]).default("pending").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type GeneratedContent = typeof generatedContent.$inferSelect;
+export type InsertGeneratedContent = typeof generatedContent.$inferInsert;

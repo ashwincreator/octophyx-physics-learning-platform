@@ -1,6 +1,6 @@
-import { eq } from "drizzle-orm";
+import { eq, like, or, desc } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { InsertUser, users, physicsTopics, generatedContent, InsertGeneratedContent, PhysicsTopic, GeneratedContent } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -89,4 +89,88 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// TODO: add feature queries here as your schema grows.
+// Physics Topics queries
+export async function searchPhysicsTopics(query: string): Promise<PhysicsTopic[]> {
+  const db = await getDb();
+  if (!db) return [];
+  
+  const searchPattern = `%${query}%`;
+  const results = await db
+    .select()
+    .from(physicsTopics)
+    .where(
+      or(
+        like(physicsTopics.name, searchPattern),
+        like(physicsTopics.keywords, searchPattern)
+      )
+    )
+    .limit(10);
+  
+  return results;
+}
+
+export async function getTopicsByCategory(category: string): Promise<PhysicsTopic[]> {
+  const db = await getDb();
+  if (!db) return [];
+  
+  const results = await db
+    .select()
+    .from(physicsTopics)
+    .where(eq(physicsTopics.category, category as any));
+  
+  return results;
+}
+
+export async function getAllTopics(): Promise<PhysicsTopic[]> {
+  const db = await getDb();
+  if (!db) return [];
+  
+  const results = await db.select().from(physicsTopics);
+  return results;
+}
+
+// Generated Content queries
+export async function createGeneratedContent(content: InsertGeneratedContent): Promise<number> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.insert(generatedContent).values(content);
+  return result[0].insertId;
+}
+
+export async function getGeneratedContentById(id: number): Promise<GeneratedContent | undefined> {
+  const db = await getDb();
+  if (!db) return undefined;
+  
+  const results = await db
+    .select()
+    .from(generatedContent)
+    .where(eq(generatedContent.id, id))
+    .limit(1);
+  
+  return results[0];
+}
+
+export async function updateGeneratedContent(id: number, updates: Partial<GeneratedContent>): Promise<void> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db
+    .update(generatedContent)
+    .set(updates)
+    .where(eq(generatedContent.id, id));
+}
+
+export async function getUserGeneratedContent(userId: number): Promise<GeneratedContent[]> {
+  const db = await getDb();
+  if (!db) return [];
+  
+  const results = await db
+    .select()
+    .from(generatedContent)
+    .where(eq(generatedContent.userId, userId))
+    .orderBy(desc(generatedContent.createdAt))
+    .limit(50);
+  
+  return results;
+}
