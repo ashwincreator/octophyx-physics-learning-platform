@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { BookOpen, Library } from "lucide-react";
 import { TopicInput } from "@/components/TopicInput";
 import { EnhancedContentViewer } from "@/components/EnhancedContentViewer";
+import { OctoPhyxLoadingScreen } from "@/components/AnimatedOctoPhyxLogo";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
 import type { GeneratedContent } from "../../../drizzle/schema";
@@ -72,12 +73,12 @@ export default function Home() {
         <div className="container py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-lg bg-primary/20 border-2 border-primary flex items-center justify-center">
-                <BookOpen className="h-7 w-7 text-primary" />
+              <div className="w-12 h-12 rounded-lg bg-foreground/10 border-2 border-foreground flex items-center justify-center">
+                <BookOpen className="h-7 w-7 text-foreground" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold tracking-tight">Physics Learning Platform</h1>
-                <p className="text-sm text-muted-foreground">AI-Powered Interactive Physics Education</p>
+                <h1 className="text-2xl font-bold tracking-tight">OctoPhyx</h1>
+                <p className="text-sm text-muted-foreground">Quantum Physics Learning Platform</p>
               </div>
             </div>
             <Button 
@@ -103,18 +104,22 @@ export default function Home() {
 
         {/* Content Display Section */}
         <div className="flex-1 py-8">
-          <div className="container h-full">
-            <div className="h-full min-h-[600px]">
-              <EnhancedContentViewer content={currentContent} isLoading={isGenerating} />
+          {isGenerating && !currentContent ? (
+            <OctoPhyxLoadingScreen />
+          ) : (
+            <div className="container h-full">
+              <div className="h-full min-h-[600px]">
+                <EnhancedContentViewer content={currentContent} isLoading={isGenerating} />
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </main>
 
       {/* Footer */}
       <footer className="border-t-2 border-border bg-card/30 backdrop-blur py-6">
         <div className="container text-center text-sm text-muted-foreground">
-          <p>Powered by AI • Blueprint-inspired design for technical precision</p>
+          <p>OctoPhyx • Quantum-powered physics learning • Powered by AI</p>
         </div>
       </footer>
     </div>
