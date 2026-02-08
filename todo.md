@@ -44,8 +44,8 @@
 
 
 ## Google API Integration
-- [ ] Configure Google API key securely as environment variable
-- [ ] Add .env.local to .gitignore
+- [x] Configure Google API key securely as environment variable
+- [x] Add .env.local to .gitignore (already configured)
 - [ ] Implement Google Maps for physics location-based concepts
 - [ ] Add Google Gemini API for enhanced content generation
 - [ ] Implement Google Sheets API for collaborative learning
