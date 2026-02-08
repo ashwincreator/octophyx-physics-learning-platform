@@ -1,5 +1,13 @@
 # OctoPhyx - Quantum Physics Learning Platform
 
+> **Tagline**: *Master Physics with AI-Powered Explanations & Interactive Problem Solving* 🐙
+
+## Elevator Pitch
+
+OctoPhyx is an AI-powered physics learning platform that transforms how students learn physics. Submit any physics problem or topic, and get instant AI-generated explanations with interactive visualizations, step-by-step solutions, and intelligent hints. Whether you're struggling with quantum mechanics, mechanics, waves, or thermodynamics, OctoPhyx provides personalized learning with a beautiful blueprint-inspired interface.
+
+---
+
 An interactive, AI-powered physics learning platform that generates explanations, animations, visualizations, and solutions for physics concepts. Built with modern web technologies and powered by advanced LLMs.
 
 ## 🐙 Features
