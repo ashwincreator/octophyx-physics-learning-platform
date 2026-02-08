@@ -49,3 +49,13 @@
 - [ ] Implement Google Maps for physics location-based concepts
 - [ ] Add Google Gemini API for enhanced content generation
 - [ ] Implement Google Sheets API for collaborative learning
+
+
+## Bug Fixes & UX Improvements
+- [x] Fix LaTeX/mathematical notation rendering (implement KaTeX)
+- [x] Improve dashboard readability with Claude-like formatting
+- [x] Better handling of complex quantum mechanics notation
+- [x] Implement proper markdown rendering with math support
+- [x] Improve visual hierarchy and spacing in content
+- [x] Add syntax highlighting for code blocks
+- [x] Optimize mobile responsiveness for formulas

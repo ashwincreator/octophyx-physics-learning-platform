@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Loader2, FileCode, Image as ImageIcon, BookOpen, BarChart3, AlertCircle, BookMarked } from "lucide-react";
-import { Streamdown } from "streamdown";
+import { ImprovedMarkdownRenderer } from "./ImprovedMarkdownRenderer";
 import { DataVisualizations } from "./DataVisualizations";
 import { ConceptCard } from "./ConceptCard";
 import { PracticeProblems } from "./PracticeProblems";
@@ -196,9 +196,9 @@ export function EnhancedContentViewer({ content, isLoading }: EnhancedContentVie
                     </div>
                   </div>
                 ) : content.explanation ? (
-                  <div className="prose prose-invert max-w-none">
+                  <div>
                     <h2 className="text-2xl font-bold mb-4 text-foreground">{content.topic}</h2>
-                    <Streamdown>{content.explanation}</Streamdown>
+                    <ImprovedMarkdownRenderer content={content.explanation || ""} />
                   </div>
                 ) : (
                   <p className="text-muted-foreground">No explanation available</p>
