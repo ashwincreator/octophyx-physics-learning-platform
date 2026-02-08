@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Library } from "lucide-react";
+import { Library } from "lucide-react";
 import { TopicInput } from "@/components/TopicInput";
 import { EnhancedContentViewer } from "@/components/EnhancedContentViewer";
-import { OctoPhyxLoadingScreen } from "@/components/AnimatedOctoPhyxLogo";
+import { OctoPhyxLoadingScreen, AnimatedOctoPhyxLogo } from "@/components/AnimatedOctoPhyxLogo";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
 import type { GeneratedContent } from "../../../drizzle/schema";
@@ -73,8 +73,8 @@ export default function Home() {
         <div className="container py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-lg bg-foreground/10 border-2 border-foreground flex items-center justify-center">
-                <BookOpen className="h-7 w-7 text-foreground" />
+              <div className="w-12 h-12">
+                <AnimatedOctoPhyxLogo size="sm" />
               </div>
               <div>
                 <h1 className="text-2xl font-bold tracking-tight">OctoPhyx</h1>
