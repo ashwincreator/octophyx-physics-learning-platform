@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Library } from "lucide-react";
+import { Library, Zap } from "lucide-react";
 import { TopicInput } from "@/components/TopicInput";
 import { EnhancedContentViewer } from "@/components/EnhancedContentViewer";
 import { OctoPhyxLoadingScreen, AnimatedOctoPhyxLogo } from "@/components/AnimatedOctoPhyxLogo";
@@ -81,14 +81,24 @@ export default function Home() {
                 <p className="text-sm text-muted-foreground">Quantum Physics Learning Platform</p>
               </div>
             </div>
-            <Button 
-              variant="outline" 
-              onClick={() => setLocation("/library")}
-              className="border-2"
-            >
-              <Library className="mr-2 h-4 w-4" />
-              Topics Library
-            </Button>
+            <div className="flex gap-2">
+              <Button 
+                variant="outline" 
+                onClick={() => setLocation("/problem-solver")}
+                className="border-2"
+              >
+                <Zap className="mr-2 h-4 w-4" />
+                Problem Solver
+              </Button>
+              <Button 
+                variant="outline" 
+                onClick={() => setLocation("/library")}
+                className="border-2"
+              >
+                <Library className="mr-2 h-4 w-4" />
+                Topics Library
+              </Button>
+            </div>
           </div>
         </div>
       </header>

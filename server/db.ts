@@ -1,6 +1,6 @@
 import { eq, like, or, desc } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, physicsTopics, generatedContent, InsertGeneratedContent, PhysicsTopic, GeneratedContent } from "../drizzle/schema";
+import { InsertUser, users, physicsTopics, generatedContent, InsertGeneratedContent, PhysicsTopic, GeneratedContent, physicsProblems, InsertPhysicsProblem, PhysicsProblem, problemSolutions, InsertProblemSolution, ProblemSolution } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -173,4 +173,83 @@ export async function getUserGeneratedContent(userId: number): Promise<Generated
     .limit(50);
   
   return results;
+}
+
+
+// Physics Problems queries
+export async function createPhysicsProblem(problem: InsertPhysicsProblem): Promise<number> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.insert(physicsProblems).values(problem);
+  return result[0].insertId;
+}
+
+export async function getPhysicsProblemById(id: number): Promise<PhysicsProblem | undefined> {
+  const db = await getDb();
+  if (!db) return undefined;
+  
+  const results = await db
+    .select()
+    .from(physicsProblems)
+    .where(eq(physicsProblems.id, id))
+    .limit(1);
+  
+  return results[0];
+}
+
+export async function getUserPhysicsProblems(userId: number): Promise<PhysicsProblem[]> {
+  const db = await getDb();
+  if (!db) return [];
+  
+  const results = await db
+    .select()
+    .from(physicsProblems)
+    .where(eq(physicsProblems.userId, userId))
+    .orderBy(desc(physicsProblems.createdAt))
+    .limit(100);
+  
+  return results;
+}
+
+export async function updatePhysicsProblem(id: number, updates: Partial<PhysicsProblem>): Promise<void> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db
+    .update(physicsProblems)
+    .set(updates)
+    .where(eq(physicsProblems.id, id));
+}
+
+// Problem Solutions queries
+export async function createProblemSolution(solution: InsertProblemSolution): Promise<number> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.insert(problemSolutions).values(solution);
+  return result[0].insertId;
+}
+
+export async function getProblemSolutionByProblemId(problemId: number): Promise<ProblemSolution | undefined> {
+  const db = await getDb();
+  if (!db) return undefined;
+  
+  const results = await db
+    .select()
+    .from(problemSolutions)
+    .where(eq(problemSolutions.problemId, problemId))
+    .limit(1);
+  
+  return results[0];
+}
+
+export async function updateProblemSolution(id: number, updates: Partial<ProblemSolution>): Promise<void> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db
+    .update(problemSolutions)
+    .set(updates)
+    .where(eq(problemSolutions.id, id));
 }

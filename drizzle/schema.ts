@@ -80,3 +80,40 @@ export const structuredContent = mysqlTable("structured_content", {
 
 export type StructuredContent = typeof structuredContent.$inferSelect;
 export type InsertStructuredContent = typeof structuredContent.$inferInsert;
+
+/**
+ * Physics problems table - stores student problems and AI-generated solutions
+ */
+export const physicsProblems = mysqlTable("physics_problems", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").references(() => users.id),
+  problemText: text("problemText").notNull(), // Problem description
+  problemImageUrl: text("problemImageUrl"), // Problem image if uploaded
+  category: varchar("category", { length: 100 }), // Physics category
+  difficulty: mysqlEnum("difficulty", ["easy", "medium", "hard"]).default("medium"),
+  isBookmarked: int("isBookmarked").default(0), // Boolean flag for bookmarking
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type PhysicsProblem = typeof physicsProblems.$inferSelect;
+export type InsertPhysicsProblem = typeof physicsProblems.$inferInsert;
+
+/**
+ * Problem solutions table - stores AI-generated solutions with step-by-step breakdown
+ */
+export const problemSolutions = mysqlTable("problem_solutions", {
+  id: int("id").autoincrement().primaryKey(),
+  problemId: int("problemId").references(() => physicsProblems.id),
+  solution: text("solution"), // Full solution text with LaTeX
+  steps: text("steps"), // JSON array of step-by-step breakdown
+  formulas: text("formulas"), // JSON array of formulas used
+  diagramUrl: text("diagramUrl"), // Generated solution diagram
+  hints: text("hints"), // JSON array of helpful hints
+  explanation: text("explanation"), // Detailed explanation
+  status: mysqlEnum("status", ["pending", "generating", "completed", "failed"]).default("pending").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type ProblemSolution = typeof problemSolutions.$inferSelect;
+export type InsertProblemSolution = typeof problemSolutions.$inferInsert;
