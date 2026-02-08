@@ -94,13 +94,13 @@ export function AnimatedOctoPhyxLogo({ size = 'md' }: { size?: 'sm' | 'md' | 'lg
               />
 
               {/* Particles along tentacle */}
-              {[0, 0.3, 0.6, 1].map((t) => {
+              {[0, 0.3, 0.6, 1].map((t, tIdx) => {
                 const x = startX + (endX - startX) * t;
                 const y = startY + (endY - startY) * t + 10 * t * (1 - t);
 
                 return (
                   <motion.circle
-                    key={`particle-${i}-${t}`}
+                    key={`particle-${i}-${tIdx}`}
                     cx={x}
                     cy={y}
                     r="2"
@@ -109,7 +109,7 @@ export function AnimatedOctoPhyxLogo({ size = 'md' }: { size?: 'sm' | 'md' | 'lg
                     variants={particleVariants}
                     animate="animate"
                     style={{
-                      transitionDelay: `${i * 0.1 + t * 0.2}s`,
+                      transitionDelay: `${i * 0.1 + tIdx * 0.2}s`,
                     }}
                   />
                 );
@@ -277,7 +277,7 @@ export function OctoPhyxLoadingScreen({ message }: { message?: string }) {
       <div className="flex gap-2">
         {[0, 1, 2].map((i) => (
           <motion.div
-            key={i}
+            key={`loader-${i}`}
             className="w-2 h-2 bg-primary rounded-full"
             animate={{ scale: [1, 1.2, 1] }}
             transition={{
