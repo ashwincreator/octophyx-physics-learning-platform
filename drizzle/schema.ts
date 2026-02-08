@@ -60,3 +60,23 @@ export const generatedContent = mysqlTable("generated_content", {
 
 export type GeneratedContent = typeof generatedContent.$inferSelect;
 export type InsertGeneratedContent = typeof generatedContent.$inferInsert;
+/**
+ * Structured content table - stores parsed, structured data from AI generation
+ * Enables rich visualizations, tables, and interactive learning
+ */
+export const structuredContent = mysqlTable("structured_content", {
+  id: int("id").autoincrement().primaryKey(),
+  contentId: int("contentId").references(() => generatedContent.id),
+  keyPoints: text("keyPoints"), // JSON array of key learning points
+  formulasData: text("formulasData"), // JSON array with formula, description, usage
+  examples: text("examples"), // JSON array of real-world examples
+  visualData: text("visualData"), // JSON data for charts/graphs
+  practiceProblems: text("practiceProblems"), // JSON array of problems with solutions
+  videoUrl: text("videoUrl"), // Generated video URL
+  diagramSvg: text("diagramSvg"), // SVG code for interactive diagrams
+  interactiveData: text("interactiveData"), // JSON for interactive simulations
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type StructuredContent = typeof structuredContent.$inferSelect;
+export type InsertStructuredContent = typeof structuredContent.$inferInsert;

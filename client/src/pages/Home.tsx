@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Library } from "lucide-react";
 import { TopicInput } from "@/components/TopicInput";
-import { ContentViewer } from "@/components/ContentViewer";
+import { EnhancedContentViewer } from "@/components/EnhancedContentViewer";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
 import type { GeneratedContent } from "../../../drizzle/schema";
@@ -105,7 +105,7 @@ export default function Home() {
         <div className="flex-1 py-8">
           <div className="container h-full">
             <div className="h-full min-h-[600px]">
-              <ContentViewer content={currentContent} isLoading={isGenerating} />
+              <EnhancedContentViewer content={currentContent} isLoading={isGenerating} />
             </div>
           </div>
         </div>

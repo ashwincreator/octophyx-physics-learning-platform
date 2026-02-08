@@ -15,6 +15,13 @@
       "when": 1770544076696,
       "tag": "0001_productive_kitty_pryde",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1770544770975,
+      "tag": "0002_military_ma_gnuci",
+      "breakpoints": true
     }
   ]
 }
